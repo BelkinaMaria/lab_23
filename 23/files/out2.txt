@@ -1,0 +1,47 @@
+#DEFINE _CRT_SECURE_NO_WARNINGS
+#INCLUDE <STDIO.H>
+#INCLUDE <WINDOWS.H>
+
+#DEFINE MAX_LEN 80
+CHAR S[MAX_LEN];
+
+
+
+VOID MAIN() {
+	SETCONSOLECP(1251);
+	SETCONSOLEOUTPUTCP(1251);
+	PRINTF("Белкина Мария.\N");
+	PRINTF("ЛР23. Задача 1.\N");
+
+	FILE* FIN = FOPEN("C:\\USERS\\CASEY\\ONEDRIVE\\Рабочий стол\\универ\\основыАлггоритмизацииИПрограммирование\\23\\FILES\\IN1.TXT", "RT");
+	IF (FIN == NULL) {
+		PRINTF("Входной файл не найден");
+		RETURN;
+	}
+
+
+	FILE* FOUT;
+	FOUT = FOPEN("C:\\USERS\\CASEY\\ONEDRIVE\\Рабочий стол\\универ\\основыАлггоритмизацииИПрограммирование\\23\\FILES\\OUT1.TXT", "WT");
+	IF (FOUT == NULL) {
+		PRINTF("Выходной файл не создался");
+		RETURN;
+	}
+
+	WHILE (!FEOF(FIN)) {
+		IF (FGETS(S, MAX_LEN - 1, FIN) != NULL) {
+			FOR (INT I = 0; S[I] != '\0'; I++) {
+
+				IF (S[I] == '\T') 
+					S[I] = '%'; 
+
+			}
+			FPRINTF(FOUT, "%S", S);
+			PRINTF(">>%S<<\N", S);
+		}
+	}
+
+	FCLOSE(FIN);
+	FCLOSE(FOUT);
+
+	PRINTF("ЛР23. Задача 1. FINISH\N");
+}

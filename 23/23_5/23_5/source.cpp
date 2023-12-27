@@ -1,0 +1,69 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <Windows.h>
+
+
+char filenameIn[] = "C:\\Users\\casey\\OneDrive\\Рабочий стол\\универ\\основыАлггоритмизацииИПрограммирования\\23\\files\\in5.txt";
+char filenameHTML[] = "C:\\Users\\casey\\OneDrive\\Рабочий стол\\универ\\основыАлггоритмизацииИПрограммирования\\23\\files\\out5_txt.html";
+
+void main() {
+	printf("BEGIN!!!\n");
+
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
+	// открыть файл текстовый (ВХОДНОЙ)
+	FILE* fin = fopen(filenameIn, "rt");
+	if (fin == NULL) {
+		// если файл не смогли открыть - сообщаем об этом
+		printf("File %s doesn't opened!\n", filenameIn);
+		return;
+	}
+
+	// открыть HTML файл (выходной файл)  
+	FILE* fout = fopen(filenameHTML, "wt");
+	if (fout == NULL) {
+		// закрываем ранее успешно открытый входной файл 
+		fclose(fin);
+		// если файл не смогли открыть - сообщаем об этом
+		printf("File %s doesn't opened!\n", filenameHTML);
+		return;
+	}
+
+
+	// Выводим в выходной файл заголовок HTML документа
+	fprintf(fout, "<!DOCTYPE html>");
+	fprintf(fout, "<html>");
+	fprintf(fout, "<head>");
+	fprintf(fout, "<meta http - equiv = \"Content-Type\" content = 	\"text/html; charset=utf-8\" />");
+	fprintf(fout, "<title>HTML Document</title>");
+	fprintf(fout, "</head>");
+	fprintf(fout, "<body>");
+
+	int ch;
+	while ((ch = getc(fin)) != EOF) {
+		// в HTML файл добавляем только что прочитанный 
+		// символ "КАК ЕСТЬ"
+		fprintf(fout, "%c", ch);
+		//printf("%c", ch); //
+
+		// если в тексте был символ новой строки – 
+		// в HTML добавляем тег <BR> - новая строка
+		if (ch == '\n') {
+			fprintf(fout, "<br>");
+		//	printf("<br>");
+		}
+	}
+
+	// выводит в HTML завершающие теги документа HTML
+	fprintf(fout, "</body>");
+	fprintf(fout, "</html>");
+
+	// Закрываем файл с текстом
+	fclose(fin);
+
+	// Закрываем HTML файл 
+	fclose(fout);
+	printf("END!!!\n");
+
+}
